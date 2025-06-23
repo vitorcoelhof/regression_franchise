@@ -68,4 +68,4 @@ if __name__ == "__main__":
 
         # Pausar por 15 segundos
         print("Aguardando 15 segundos...")
-        sleep(15)
+        sleep(2)
