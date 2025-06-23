@@ -32,4 +32,4 @@ if __name__ == "__main__":
         dados_json = extrair()
         dados_tratados = transformar (dados_json)
         load(dados_tratados)
-        time.sleep(1)
+        break
