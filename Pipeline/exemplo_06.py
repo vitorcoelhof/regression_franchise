@@ -9,6 +9,7 @@ load_dotenv()
 
 
 # Configurações do banco de dados
+#DATABASE_URL = "postgresql+psycopg2://dbname_cx8z_user:qrXNf2gDKBMo417w5O3H40Fu2iQ5VE6v@dpg-d1csne7fte5s738vufi0-a.ohio-postgres.render.com/dbname_cx8z"
 DATABASE_URL = os.getenv("DATABASE_KEY")
 # Criação do engine e sessão
 engine = create_engine(DATABASE_URL)
