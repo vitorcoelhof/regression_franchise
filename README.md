@@ -1,51 +1,69 @@
+# WebScraping-MercadoLivre
 
-# Coleta de Dados do Bitcoin com Python, SQLAlchemy e PostgreSQL
+Este projeto realiza uma pesquisa de mercado de notebooks no Mercado Livre utilizando web scraping, processamento de dados e visualização interativa.
 
-Este projeto realiza a extração periódica do valor do Bitcoin utilizando a API da Coinbase, trata os dados e armazena-os em um banco de dados PostgreSQL utilizando SQLAlchemy.
+## 1. Extração de Dados (Web Scraping)
 
-## Funcionalidades
-- Extração do preço do Bitcoin em tempo real
-- Tratamento e estruturação dos dados
-- Armazenamento dos dados em banco PostgreSQL
-- Execução automática em intervalos definidos
+- Utiliza o [Scrapy](https://scrapy.org/) para coletar informações de notebooks no Mercado Livre.
+- O spider principal está em `src/extraction/coleta/spiders/notebook.py`.
+- Os dados extraídos incluem: marca, nome, vendedor, avaliações, preços antigo e novo.
 
-## Bibliotecas Utilizadas
-- **requests**: Realiza requisições HTTP para consumir a API da Coinbase.
-- **sqlalchemy**: ORM para manipulação do banco de dados PostgreSQL.
-- **datetime**: Manipulação de datas e horários.
-- **time (sleep)**: Pausa a execução entre as coletas.
-- **dotenv**: Carrega variáveis de ambiente do arquivo `.env` (opcional, para segurança de credenciais).
-- **os**: Manipulação de variáveis de ambiente do sistema.
-
-![SQLAchemy](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/SQLAlchemy.svg/250px-SQLAlchemy.svg.png)
-![Python](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/150px-Python-logo-notext.svg.png)
-![PostGreSQL](https://kinsta.com/wp-content/uploads/2022/02/postgres-logo.png)
-
-## Estrutura do Código
-- `extrair_dados_bitcoin()`: Faz a requisição à API da Coinbase e retorna o JSON com o valor do Bitcoin.
-- `tratar_dados_bitcoin(dados_json)`: Recebe o JSON bruto, extrai os campos relevantes e adiciona um timestamp.
-- `salvar_dados_sqlalchemy(dados)`: Salva os dados tratados no banco PostgreSQL usando SQLAlchemy.
-- Loop principal: Executa a extração, tratamento e salvamento dos dados em intervalos definidos (atualmente 2 segundos).
-
-## Como Executar
-1. Instale as dependências:
-   ```bash
-   pip install requests sqlalchemy psycopg2-binary python-dotenv
-   ```
-2. Configure a string de conexão do banco de dados PostgreSQL na variável `DATABASE_URL`.
-3. Execute o script:
-   ```bash
-   python exemplo_06.py
-   ```
-
-## Observações
-- O script cria automaticamente a tabela `bitcoin_dados` caso não exista.
-- O intervalo de coleta pode ser ajustado alterando o valor passado para `sleep()`.
-- Certifique-se de que o banco de dados PostgreSQL está acessível e as credenciais estão corretas.
+**Como rodar o spider:**
+```sh
+cd src/extraction
+scrapy crawl notebook -o ../../data/data.jsonl
+```
 
 ---
 
+## 2. Transformação e Carga dos Dados
 
+- O script `src/transformLoad/main.py` processa o arquivo `data.jsonl`:
+  - Limpa e converte os dados (preços, avaliações, etc.).
+  - Filtra produtos com preços entre R$1.000 e R$10.000.
+  - Salva os dados tratados em um banco SQLite (`data/mercadolivre.db`), na tabela `notebook`.
 
+**Como rodar a transformação:**
+```sh
+python src/transformLoad/main.py
+```
 
+---
+
+## 3. Visualização dos Dados
+
+- O dashboard interativo está em `src/dashboard/app.py` e utiliza [Streamlit](https://streamlit.io/).
+- KPIs apresentados:
+  - Total de notebooks coletados
+  - Número de marcas únicas
+  - Preço médio
+  - Marcas mais frequentes
+  - Preço médio por marca
+  - Satisfação média por marca
+
+**Como rodar o dashboard:**
+```sh
+streamlit run src/dashboard/app.py
+```
+
+---
+
+## 4. Requisitos
+
+Instale as dependências com:
+```sh
+pip install -r requirements.txt
+```
+
+---
+
+## 5. Observações
+
+- O projeto utiliza Python 3, Scrapy, Pandas e Streamlit.
+- Os dados são salvos em `data/` para fácil acesso e versionamento.
+- O spider está configurado para coletar até 10 páginas de resultados.
+
+---
+
+**Autor:** Vitor Ferreira
 
