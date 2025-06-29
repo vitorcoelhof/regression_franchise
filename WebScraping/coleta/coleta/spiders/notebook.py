@@ -6,7 +6,7 @@ class NotebookSpider(scrapy.Spider):
     allowed_domains = ["lista.mercadolivre.com.br"]
     start_urls = ["https://lista.mercadolivre.com.br/notebook?sb=rb#D[A:notebook]"]
     page_count = 1
-    max_page = 10
+    max_page = 11
 
     def parse(self, response):
 
