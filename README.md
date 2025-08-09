@@ -2,6 +2,8 @@
 
 Este projeto utiliza Python, Streamlit e scikit-learn para simular o valor do investimento inicial necessário para abrir uma franquia, com base em dados históricos e regressão linear.
 
+![image](https://github.com/user-attachments/assets/e92f3814-45ce-4a6d-a23b-06db73dd1837)
+
 ## Descrição do Projeto
 O arquivo `reg_lin.py` implementa uma aplicação web interativa que:
 - Carrega um conjunto de dados (`slr12.csv`) contendo valores anuais de franquia e custos iniciais.
@@ -24,8 +26,6 @@ O arquivo `reg_lin.py` implementa uma aplicação web interativa que:
 
 ## Objetivo
 O objetivo é demonstrar, de forma simples e visual, como a regressão linear pode ser utilizada para prever custos de investimento inicial em franquias a partir de dados históricos.
-
-![image](https://github.com/user-attachments/assets/e92f3814-45ce-4a6d-a23b-06db73dd1837)
 
 ---
 
